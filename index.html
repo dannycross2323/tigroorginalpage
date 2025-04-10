@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tigro</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+    }
+    header img {
+      height: 100px;
+    }
+    header h1 {
+      font-size: 24px;
+      margin-right: 100px;
+    }
+    .banner {
+      width: 371px;
+      height: 90px;
+      background-color: #333;
+      margin: 10px 0;
+    }
+    .section {
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+    .section h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    input[type="text"] {
+      width: 200px;
+      height: 35px;
+      border-radius: 20px;
+      border: none;
+      padding: 5px 15px;
+      font-size: 14px;
+      background-color: #fff;
+      color: #000;
+    }
+    .followers-options button {
+      width: 69px;
+      height: 36px;
+      margin: 5px;
+      font-weight: 600;
+      background: linear-gradient(45deg, #FF0051, #FF6696);
+      border: none;
+      font-size: 20px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .followers-options button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(255, 0, 81, 0.5);
+    }
+    .followers-options button:active {
+      background: linear-gradient(45deg, #FF6696, #FF0051);
+    }
+    .mission-item {
+      width: 367px;
+      height: 40px;
+      background-color: #1e1e1e;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    /* Completed mission styling */
+    .mission-item.completed {
+      background-color: green;
+    }
+    /* Advanced styling for the third mission item ("Follow on IG") */
+    .mission-item:nth-child(3) {
+      background: linear-gradient(45deg, #FF0051, #FF6696);
+      border: none;
+      box-shadow: 0 4px 15px rgba(255, 0, 81, 0.5);
+    }
+    .mission-item:nth-child(3):hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 0, 81, 0.7);
+    }
+    .mission-item:nth-child(3)::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      z-index: -1;
+      background: linear-gradient(45deg, #FF0051, #FF6696, #FF0051);
+      background-size: 400% 400%;
+      filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: inherit;
+    }
+    .mission-item:nth-child(3):hover::before {
+      opacity: 1;
+      animation: glow 2s ease-in-out infinite;
+    }
+    @keyframes glow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    .progress-bar {
+      width: 100%;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 20px;
+      margin-top: 10px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: green;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    #claimSection {
+      display: none;
+      margin-top: 20px;
+    }
+    #claimBtn {
+      background-color: #FF0051;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    #claimBtn:hover {
+      background-color: #FF6696;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    
+    <img src="tigro.png" alt="Logo">
+    <h1>Welcome To Tigro</h1>
+  </header>
+
+  <div id="frame" style="width:320px; height:auto;"><iframe data-aa='2389458' src='//ad.a-ads.com/2389458?size=320x50' style='width:320px; height:50px; border:0px; padding:0; overflow:hidden; background-color: transparent;'></iframe><a style="display: block; text-align: right; font-size: 12px;" id="preview-link" href="https://aads.com/campaigns/new/?source_id=2389458&source_type=ad_unit&partner=2389458">Advertise here</a></div>
+
+  <div class="section">
+    <h2>Enter Your Profile Link</h2>
+    <p>Copy Your IG Profile Link And Put In input.</p>
+    <input type="text" id="profileLink" placeholder="Profile’s Link">
+  </div>
+
+  <div id="frame" style="width:320px; height:auto;"><iframe data-aa='2389458' src='//ad.a-ads.com/2389458?size=320x50' style='width:320px; height:50px; border:0px; padding:0; overflow:hidden; background-color: transparent;'></iframe><a style="display: block; text-align: right; font-size: 12px;" id="preview-link" href="https://aads.com/campaigns/new/?source_id=2389458&source_type=ad_unit&partner=2389458">Advertise here</a></div>
+
+  <div class="section">
+    <h2>Followers</h2>
+    <div class="followers-options" id="followersOptions"></div>
+  </div>
+
+  <div id="frame" style="width:320px; height:auto;"><iframe data-aa='2389458' src='//ad.a-ads.com/2389458?size=320x50' style='width:320px; height:50px; border:0px; padding:0; overflow:hidden; background-color: transparent;'></iframe><a style="display: block; text-align: right; font-size: 12px;" id="preview-link" href="https://aads.com/campaigns/new/?source_id=2389458&source_type=ad_unit&partner=2389458">Advertise here</a></div>
+
+  <div class="section">
+    <h2>Mission</h2>
+    <div id="missions"></div>
+    <div class="progress-bar">
+      <div id="progressFill" class="progress-fill"></div>
+    </div>
+  </div>
+
+  <div id="frame" style="width:320px; height:auto;"><iframe data-aa='2389458' src='//ad.a-ads.com/2389458?size=320x50' style='width:320px; height:50px; border:0px; padding:0; overflow:hidden; background-color: transparent;'></iframe><a style="display: block; text-align: right; font-size: 12px;" id="preview-link" href="https://aads.com/campaigns/new/?source_id=2389458&source_type=ad_unit&partner=2389458">Advertise here</a></div>
+
+  <div class="section" id="claimSection">
+    <button id="claimBtn">Claim</button>
+  </div>
+
+  <script>
+    const profileInput = document.getElementById('profileLink');
+    const followersOptionsDiv = document.getElementById('followersOptions');
+    const missionsDiv = document.getElementById('missions');
+    const progressFill = document.getElementById('progressFill');
+    const claimSection = document.getElementById('claimSection');
+    const claimBtn = document.getElementById('claimBtn');
+
+    let currentFollowers = null;
+    let missionStatus = { ads: 0, requiredAds: 0, clicks: 0, requiredClicks: 0, followed: false };
+
+    const followerCounts = [10, 20, 30, 40, 50];
+
+    function createFollowerButtons() {
+      followersOptionsDiv.innerHTML = '';
+      followerCounts.forEach(count => {
+        const btn = document.createElement('button');
+        btn.textContent = count;
+        btn.onclick = () => {
+          if (!profileInput.value.includes("instagram.com/")) {
+            alert('Enter a valid IG link first');
+            return;
+          }
+          currentFollowers = count;
+          missionStatus.requiredAds = Math.ceil(count / 2);
+          missionStatus.requiredClicks = Math.ceil(count / 3);
+          missionStatus.ads = 0;
+          missionStatus.clicks = 0;
+          missionStatus.followed = false;
+          updateMissions();
+          updateProgress();
+        };
+        followersOptionsDiv.appendChild(btn);
+      });
+    }
+
+    function updateMissions() {
+      missionsDiv.innerHTML = '';
+      const missions = [
+        { name: `Watch Ads (${missionStatus.ads}/${missionStatus.requiredAds})`, key: 'ads' },
+        { name: `Click on Links (${missionStatus.clicks}/${missionStatus.requiredClicks})`, key: 'clicks' },
+        { name: 'Follow on IG', key: 'followed' }
+      ];
+
+      missions.forEach(m => {
+        const el = document.createElement('div');
+        el.className = 'mission-item' + (missionStatus[m.key] >= (m.key === 'ads' 
+          ? missionStatus.requiredAds 
+          : m.key === 'clicks' 
+            ? missionStatus.requiredClicks 
+            : missionStatus[m.key]) ? ' completed' : '');
+        el.textContent = m.name;
+        el.onclick = () => {
+          if (m.key === 'followed') {
+            missionStatus[m.key] = !missionStatus[m.key];
+          } else {
+            if (missionStatus[m.key] < missionStatus["required" + m.key.charAt(0).toUpperCase() + m.key.slice(1)]) {
+              missionStatus[m.key]++;
+            } else {
+              missionStatus[m.key]--;
+            }
+          }
+          updateMissions();
+          updateProgress();
+        };
+        missionsDiv.appendChild(el);
+      });
+    }
+
+    function updateProgress() {
+      const done = (missionStatus.ads >= missionStatus.requiredAds && missionStatus.clicks >= missionStatus.requiredClicks && missionStatus.followed);
+      progressFill.style.width = done ? '100%' : (((missionStatus.ads / missionStatus.requiredAds + missionStatus.clicks / missionStatus.requiredClicks + (missionStatus.followed ? 1 : 0)) / 3) * 100) + '%';
+      claimSection.style.display = done ? 'block' : 'none';
+    }
+
+    claimBtn.onclick = () => {
+      const link = profileInput.value;
+      const entry = {
+        link: link,
+        followers: currentFollowers,
+        ads: missionStatus.ads,
+        clicks: missionStatus.clicks,
+        followed: missionStatus.followed
+      };
+
+      if (window.opener && typeof window.opener.addNewEntry === 'function') {
+        window.opener.addNewEntry(entry);
+      } else {
+        localStorage.setItem('pendingClaim', JSON.stringify(entry));
+      }
+
+      alert('You will get followers as soon.');
+    };
+
+    createFollowerButtons();
+  </script>
+</body>
+</html>

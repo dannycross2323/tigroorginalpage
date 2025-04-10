@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tigro</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: 600px;
+      padding: 20px;
+    }
+    header img {
+      height: 50px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .banner {
+      width: 371px;
+      height: 90px;
+      background-color: #333;
+      margin: 10px 0;
+    }
+    .user-entry {
+      width: 90%;
+      max-width: 400px;
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      padding: 10px;
+      margin: 10px 0;
+      border-left: 6px solid green;
+      position: relative;
+    }
+    .user-entry.duplicate {
+      border-left-color: red;
+    }
+    .user-entry h3 {
+      margin: 0 0 10px 0;
+    }
+    .search-bar {
+      margin: 20px 0;
+    }
+    .search-bar input {
+      width: 300px;
+      height: 30px;
+      border-radius: 15px;
+      border: none;
+      padding: 0 15px;
+      font-size: 14px;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo">
+    <h1>Tigro</h1>
+  </header>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search by username...">
+  </div>
+
+  <div id="entriesContainer"></div>
+
+  <script>
+    const container = document.getElementById('entriesContainer');
+    const searchInput = document.getElementById('searchInput');
+
+    const extractUsername = (link) => {
+      try {
+        const url = new URL(link);
+        const parts = url.pathname.split('/').filter(Boolean);
+        return parts[0] || 'Unknown';
+      } catch {
+        return 'Unknown';
+      }
+    };
+
+    function loadEntries() {
+      let entries = JSON.parse(localStorage.getItem('tigroEntries') || '[]');
+      const seen = new Set();
+
+      container.innerHTML = '';
+
+      entries.forEach((entry, index) => {
+        const key = `${entry.link}-${entry.followers}-${entry.ads}-${entry.clicks}-${entry.followed}`;
+        const uniqueKey = `${entry.link}-${entry.followers}`;
+        const isDuplicate = entries.filter(e => `${e.link}-${e.followers}-${e.ads}-${e.clicks}-${e.followed}` === key).length > 1;
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'user-entry';
+        if (isDuplicate) wrapper.classList.add('duplicate');
+
+        const user = extractUsername(entry.link);
+        wrapper.innerHTML = `
+          <h3>@${user}</h3>
+          <p><strong>Link:</strong> ${entry.link}</p>
+          <p><strong>Followers:</strong> ${entry.followers}</p>
+          <p><strong>Ads Watched:</strong> ${entry.ads}</p>
+          <p><strong>Links Clicked:</strong> ${entry.clicks}</p>
+          <p><strong>Followed:</strong> ${entry.followed ? 'Yes' : 'No'}</p>
+          <p><strong>Date:</strong> ${entry.date || 'N/A'}</p>
+        `;
+
+        // Create Delete Button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('delete-btn');
+        deleteBtn.innerText = 'X';
+        deleteBtn.onclick = () => deleteEntry(index); // Attach delete function
+
+        wrapper.appendChild(deleteBtn);
+        container.appendChild(wrapper);
+      });
+    }
+
+    function deleteEntry(index) {
+      let entries = JSON.parse(localStorage.getItem('tigroEntries') || '[]');
+      entries.splice(index, 1); // Remove the entry at the specified index
+      localStorage.setItem('tigroEntries', JSON.stringify(entries));
+      loadEntries(); // Reload the entries after deletion
+    }
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      const cards = document.querySelectorAll('.user-entry');
+      cards.forEach(card => {
+        card.style.display = card.innerText.toLowerCase().includes(query) ? '' : 'none';
+      });
+    });
+
+    window.addNewEntry = (newEntry) => {
+      const entries = JSON.parse(localStorage.getItem('tigroEntries') || '[]');
+      newEntry.date = new Date().toLocaleString();
+      const existingSame = entries.find(e =>
+        e.link === newEntry.link &&
+        e.followers === newEntry.followers &&
+        e.ads === newEntry.ads &&
+        e.clicks === newEntry.clicks &&
+        e.followed === newEntry.followed
+      );
+      if (!existingSame) {
+        entries.push(newEntry);
+        localStorage.setItem('tigroEntries', JSON.stringify(entries));
+      }
+      loadEntries();
+    };
+
+    window.onload = () => {
+      const pending = JSON.parse(localStorage.getItem('pendingClaim'));
+      if (pending) {
+        window.addNewEntry(pending);
+        localStorage.removeItem('pendingClaim');
+      }
+      loadEntries();
+    };
+  </script>
+</body>
+</html>
